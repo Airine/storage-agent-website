@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Cards, Card } from 'fumadocs-ui/components/card';
+import MockTUI from '@/components/mock-tui';
 
 const GITHUB = 'https://github.com/Airine/storage-optimizer';
 const PYPI = 'https://pypi.org/project/storage-agent-tui/';
@@ -190,6 +191,43 @@ pipx install storage-agent-tui`} />
               PyPI 页面 →
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* 在线体验（Mock 数据交互版） */}
+      <section className="mx-auto max-w-5xl px-6 py-12">
+        <h2 className="text-center text-2xl font-semibold">在线体验</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-zinc-600 dark:text-zinc-300">
+          无需安装，直接体验核心交互——生成 AI 建议、按风险勾选清理项（演示数据，纯前端模拟）。
+        </p>
+        <div className="mt-8">
+          <MockTUI />
+        </div>
+      </section>
+
+      {/* 真实界面截图 */}
+      <section className="mx-auto max-w-5xl px-6 py-12">
+        <h2 className="text-center text-2xl font-semibold">三步核心流程</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-zinc-600 dark:text-zinc-300">
+          AI 解释 → 分级选择 → 移入废纸篓可恢复，每一步都清晰可见。
+        </p>
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {[
+            { src: '/screenshots/step1-ai-advice.svg', title: '① AI 解释并排序', desc: 'AI 分析磁盘占用、说明每项风险与优先级' },
+            { src: '/screenshots/step2-select-candidates.svg', title: '② 分级选择清理项', desc: 'safe / review / protected 三档，敏感路径自动拦截' },
+            { src: '/screenshots/step3-history-undo.svg', title: '③ 移入废纸篓，可恢复', desc: 'SQLite 审计 + History & Undo 一键撤销' },
+          ].map((shot) => (
+            <figure key={shot.src} className="overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+              <a href={shot.src} target="_blank" rel="noreferrer" className="block border-b border-zinc-200 bg-zinc-950 dark:border-zinc-800">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={shot.src} alt={shot.title} className="w-full" loading="lazy" />
+              </a>
+              <figcaption className="p-4">
+                <h3 className="font-semibold">{shot.title}</h3>
+                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">{shot.desc}</p>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
