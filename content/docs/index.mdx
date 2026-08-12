@@ -1,0 +1,67 @@
+---
+title: 文档
+description: Storage Agent 安装、使用与安全模型
+---
+
+# Storage Agent 文档
+
+Storage Agent 是一个面向 macOS 的存储优化终端工具（TUI）。核心思路：
+**AI 负责解释，你负责决定，废纸篓兜底**。
+
+## 安装
+
+### Homebrew（推荐）
+
+```sh
+brew tap Airine/storage-agent
+brew trust Airine/storage-agent
+brew install storage-agent-tui
+```
+
+### PyPI
+
+```sh
+uv tool install storage-agent-tui
+# 或
+pipx install storage-agent-tui
+```
+
+安装后运行：
+
+```sh
+storage-agent doctor   # 健康检查
+storage-agent          # 启动 TUI
+```
+
+## 快速上手
+
+1. 启动后等待扫描完成，点击 **① 生成建议**，让 AI 解释最大占用与优先级。
+2. 进入 **② 选择清理项**，按风险把项目加入清理清单：
+   - `safe`：普通确认即可；
+   - `review`：执行时需强化确认；
+   - `protected`：执行时需 macOS 管理员身份验证（应用不读取密码）。
+3. 点击 **③ 清理已选项**，输入确认文字后移入废纸篓。
+4. 需要反悔时，在 **History & Undo** 页面恢复。
+
+## 安全模型
+
+- 磁盘容量与分类来自本地确定性扫描；AI 只解释结构化摘要，无工具、无文件系统权限。
+- 清理只移动到 macOS 废纸篓，绝不永久删除。
+- 绝对禁区（管理员验证也不能绕过）：`.git`、`.ssh`、`.gnupg`、钥匙串、邮件、消息、照片库、扫描根目录、符号链接。
+- 每次操作写入 SQLite 审计日志。
+
+## CLI 命令
+
+| 命令 | 说明 |
+| --- | --- |
+| `storage-agent` | 启动 TUI |
+| `storage-agent scan` | 命令行扫描并输出摘要 |
+| `storage-agent report` | 导出 Markdown / JSON 报告 |
+| `storage-agent doctor` | 环境健康检查 |
+| `storage-agent config` | 查看配置 |
+
+## 链接
+
+- GitHub：[Airine/storage-optimizer](https://github.com/Airine/storage-optimizer)
+- Homebrew tap：[Airine/homebrew-storage-agent](https://github.com/Airine/homebrew-storage-agent)
+- PyPI：[storage-agent-tui](https://pypi.org/project/storage-agent-tui/)
